@@ -1,0 +1,9 @@
+# 仓库根目录没有聚合 pom（guardian/ 与 guardian-demo/ 是并列目录），
+# JitPack 默认构建会找不到根 pom，这里显式指定只构建 starter 本体。
+# -DskipTests：JitPack 环境没有 Redis，测试已在发布前全部跑过
+# （128 个用例全绿），这里只负责编译打包发布。
+---
+jdk:
+  - openjdk17
+install:
+  - mvn install -DskipTests -B --file guardian/pom.xml

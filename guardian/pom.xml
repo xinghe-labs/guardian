@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.2.5</version>
+    <relativePath/>
+  </parent>
+
+  <!--
+    JitPack 发布坐标：com.github.xinghe-labs:guardian:<tag>（tag 与 version 同步，
+    当前 0.1.0）。groupId 用 GitHub owner 名是 JitPack 约定值，拉包方无需额外
+    猜测映射；本地 mvn install 后 demo 也直接按同一坐标引依赖。
+    注：Java 包名 com.github.guardian 与 Maven groupId 无关，为避免无谓的
+    代码漂移保留不动。
+  -->
+  <groupId>com.github.xinghe-labs</groupId>
+  <artifactId>guardian</artifactId>
+  <version>0.1.0</version>
+  <name>guardian</name>
+  <description>幂等 / 限流 / 分布式锁 三合一 Spring Boot Starter</description>
+
+  <properties>
+    <java.version>17</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <!-- 切面能力：三个注解都靠 AOP 拦截 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
+    </dependency>
+
+    <!--
+      Redis 依赖设为 optional：starter 的职责是"在用户已有的 Redis 上做增强"，
+      不该把 Redis 客户端强行塞给不需要它的项目。用户若要用 RedisStorage，
+      自己引 spring-boot-starter-data-redis（README 会写）。
+    -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!--
+      Jackson 也设为 optional：只有 cacheResult=true 才需要它。
+      classpath 上没有时自动退回 UnavailableResultCodec（用到才报错，不影响启动）。
+    -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- 生成 spring-configuration-metadata.json，让 IDE 里 guardian.* 有补全 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <!--
+            必须开 -parameters：@Idempotent(key = "#req.orderNo") 要靠它拿到参数名。
+            不开的话 SpEL 里的 #req 解析不到，运行期才炸。
+          -->
+          <parameters>true</parameters>
+        </configuration>
+      </plugin>
+
+      <!--
+        覆盖率：report 出 HTML 报告，check 是门禁。
+        门禁原本打算放到 S5 再加（骨架类没有可执行代码时会误报），但 S4 的验收标准
+        就是「单测行覆盖率 ≥ 70%」——现在只量不拦，等于没验收：以后谁把覆盖率改到
+        50% 也不会失败。实测当前 92.5%，门槛定 70% 留了余量。
+      -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.11</version>
+        <executions>
+          <execution>
+            <id>prepare-agent</id>
+            <goals><goal>prepare-agent</goal></goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals><goal>report</goal></goals>
+          </execution>
+          <execution>
+            <id>check</id>
+            <phase>verify</phase>
+            <goals><goal>check</goal></goals>
+            <configuration>
+              <rules>
+                <rule>
+                  <element>BUNDLE</element>
+                  <limits>
+                    <limit>
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.70</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

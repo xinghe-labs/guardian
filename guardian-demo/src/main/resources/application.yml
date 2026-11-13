@@ -1,0 +1,13 @@
+server:
+  port: 18080
+
+spring:
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6399
+
+guardian:
+  # 消费方自己的 key 前缀：与其他应用共用 Redis 时隔离命名空间
+  key-prefix: "demo:"
+  # 其余全走默认值（enabled=true、幂等 fail-closed、限流 fail-open、锁 fail-closed）

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.dtd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.5</version>
+        <relativePath/>
+    </parent>
+
+    <!-- 消费方视角：starter 是"别人的库"，这里只声明坐标依赖它 -->
+    <groupId>com.example</groupId>
+    <artifactId>guardian-demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>guardian-demo</name>
+    <description>guardian starter 的使用方 demo：验证"别人引入坐标就能用"</description>
+
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.xinghe-labs</groupId>
+            <artifactId>guardian</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+        <!-- guardian 对 spring-data-redis 是 optional 依赖，不传递：
+             用哪个存储是消费方的选择，必须自己显式声明（这正是 Local WARN 提示的事） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

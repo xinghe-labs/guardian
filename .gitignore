@@ -1,0 +1,11 @@
+# 临时/备份
+*.bak
+*.tmp
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# 编辑器
+.idea/
+.vscode/

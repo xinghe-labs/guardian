@@ -1,0 +1,3 @@
+com.github.guardian.config.GuardianRedisStorageAutoConfiguration
+com.github.guardian.config.GuardianLocalStorageAutoConfiguration
+com.github.guardian.config.GuardianAutoConfiguration
