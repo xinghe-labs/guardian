@@ -2,7 +2,7 @@
 
 幂等 / 限流 / 分布式锁 三合一 Spring Boot Starter。三个注解，零配置可用，Redis 缺失时自动降级。
 
-[![Release](https://jitpack.io/v/xinghe-labs/guardian.svg)](https://jitpack.io/#xinghe-labs/guardian/v0.1.0)
+[![Release](https://jitpack.io/v/xinghe-labs/guardian.svg)](https://jitpack.io/#xinghe-labs/guardian/v0.1.1)
 [![CI](https://github.com/xinghe-labs/guardian/actions/workflows/ci.yml/badge.svg)](https://github.com/xinghe-labs/guardian/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen.svg)](guardian/pom.xml)
@@ -41,7 +41,7 @@ JitPack 已实测可拉（构建日志 + 空仓库消费方编译均已验证）
 <dependency>
   <groupId>com.github.xinghe-labs</groupId>
   <artifactId>guardian</artifactId>
-  <version>v0.1.0</version>
+  <version>v0.1.1</version>
 </dependency>
 ```
 

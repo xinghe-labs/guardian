@@ -2,7 +2,17 @@
 
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，版本号遵循语义化版本。
 
-## [v0.1.0] - 2026-05-12
+## [v0.1.1] - 2026-11-13
+
+### 改进
+
+- CI：新增 GitHub Actions 工作流（JDK 17 + Redis 3.0 service 容器，`mvn verify` 全量）
+- 文档：新增 demo 使用文档（curl 实测示例）与 CHANGELOG；根 README 补 CI / License / Coverage 徽章
+- 构建产物对齐当前源码树重新发布
+
+无 API 变化。
+
+## [v0.1.0] - 2026-11-13
 
 ### 新增
 
