@@ -3,6 +3,9 @@
 幂等 / 限流 / 分布式锁 三合一 Spring Boot Starter。三个注解，零配置可用，Redis 缺失时自动降级。
 
 [![Release](https://jitpack.io/v/xinghe-labs/guardian.svg)](https://jitpack.io/#xinghe-labs/guardian/v0.1.0)
+[![CI](https://github.com/xinghe-labs/guardian/actions/workflows/ci.yml/badge.svg)](https://github.com/xinghe-labs/guardian/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen.svg)](guardian/pom.xml)
 
 ```java
 @Idempotent(key = "'order:' + #req.id")              // 同一订单只提交一次
@@ -51,7 +54,7 @@ cd guardian && mvn install
 cd ../guardian-demo && mvn spring-boot:run
 ```
 
-demo 实测记录：
+demo 实测记录（详细步骤与预期响应见 [guardian-demo/README.md](guardian-demo/README.md)）：
 
 - 幂等：同一 `orderNo` 提交两次返回**同一个 orderId**（`cacheResult` 经 Jackson 编解码）
 - 限流：5 连发 `200 200 200 429 429`
